@@ -1,0 +1,36 @@
+<h1>Add Sport and/or Discipline</h1>
+<form>
+  <table>
+    <tr>
+      <td>
+        <mat-form-field appearance="legacy">
+          <mat-label>Enter name of the sport</mat-label>
+          <input matInput placeholder="name" required name='name' [(ngModel)]='name'>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field appearance="legacy">
+          <mat-label>Enter name of discipline</mat-label>
+          <input matInput placeholder="discipline" required name='discipline' [(ngModel)]='discipline'>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button mat-raised-button color="primary" (click)='addsport()'>Add</button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div style="color: red;">{{errorMessage}}</div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div style="color: green;">{{message}}</div>
+      </td>
+    </tr>
+  </table>
+</form>

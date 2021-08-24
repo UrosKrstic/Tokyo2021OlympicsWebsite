@@ -1,0 +1,94 @@
+<h2>Registration form</h2>
+<form>
+  <table>
+    <tr>
+      <td>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter your username</mat-label>
+          <input matInput placeholder="username" required name='username' [(ngModel)]='username'>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter your password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]='password' name='password' required>
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" required>
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-hint>Must be at least 8 characters long</mat-hint>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field appearance="outline">
+          <mat-label>Confirm your password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]='confirmed_password' name='confirmed_password' required>
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" required>
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter your firstname</mat-label>
+          <input matInput placeholder="firstname" required name='firstname' [(ngModel)]='first_name'>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter your lastname</mat-label>
+          <input matInput placeholder="lastname" required name='lastname' [(ngModel)]='last_name'>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter your country of origin</mat-label>
+          <mat-select [(ngModel)]='country' name='country' required>
+            <mat-option *ngFor="let coun of countries" [value]="coun">
+              {{coun}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter type of delegate</mat-label>
+          <mat-select [(ngModel)]='type' name='type' required>
+            <mat-option value="delegate">
+              delegate
+            </mat-option>
+            <mat-option value="leader">
+              leader
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button mat-raised-button color="primary" (click)='register()'>Register</button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div style="color: red;">{{errorMessage}}</div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a routerLink='/login'>If you already have an account, you can login here.</a>
+      </td>
+    </tr>
+  </table>
+</form>

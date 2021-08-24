@@ -1,0 +1,12 @@
+<table>
+  <tr>
+    <td>Name</td>
+    <td>Flag</td>
+    <td>Number of athletes</td>
+  </tr>
+  <tr *ngFor='let country of countries'>
+    <td>{{country.name}}</td>
+    <td><img src="{{country.flagImgSrc}}" alt="wtf"></td>
+    <td>{{country.numberOfAthletes}}</td>
+  </tr>
+</table>

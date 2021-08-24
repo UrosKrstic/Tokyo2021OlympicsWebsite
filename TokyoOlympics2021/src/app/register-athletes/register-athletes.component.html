@@ -1,0 +1,67 @@
+<h1>Athlete Registration</h1>
+<form>
+  <table>
+    <tr>
+      <td>
+        <mat-form-field appearance="legacy">
+          <mat-label>Enter name of the athlete</mat-label>
+          <input matInput placeholder="name" required name='name' [(ngModel)]='name'>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field appearance="legacy">
+          <mat-label>Enter gender</mat-label>
+          <mat-select [(ngModel)]='gender' name='gender' required>
+            <mat-option value="male">
+              male
+            </mat-option>
+            <mat-option value="female">
+              female
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field appearance="legacy">
+          <mat-label>Select sport</mat-label>
+          <mat-select [(ngModel)]='sport' name='sport' required (valueChange)='changeDisciplines()'>
+            <mat-option *ngFor="let spo of sports" [value]="spo.name">
+              {{spo.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field appearance="legacy">
+          <mat-label>Select discpline</mat-label>
+          <mat-select [(ngModel)]='discipline' name='discipline' required>
+            <mat-option *ngFor="let disc of disciplines" [value]="disc">
+              {{disc}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button mat-raised-button color="primary" (click)='register()'>Register</button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div style="color: red;">{{errorMessage}}</div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div style="color: green;">{{message}}</div>
+      </td>
+    </tr>
+  </table>
+</form>

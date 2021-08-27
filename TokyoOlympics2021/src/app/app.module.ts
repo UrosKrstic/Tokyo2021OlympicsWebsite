@@ -16,6 +16,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTableModule } from '@angular/material/table';
+
+import { FilestackModule } from '@filestack/angular';
 
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -51,6 +57,11 @@ import { AddsportComponent } from './addsport/addsport.component';
     MatButtonModule,
     MatSelectModule,
     MatPaginatorModule,
+    FilestackModule,
+    MatTabsModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,6 @@
 <h1>Athlete Registration</h1>
+<mat-tab-group mat-align-tabs="center">
+<mat-tab label="Input form">
 <form>
   <table>
     <tr>
@@ -28,7 +30,7 @@
       <td>
         <mat-form-field appearance="legacy">
           <mat-label>Select sport</mat-label>
-          <mat-select [(ngModel)]='sport' name='sport' required (valueChange)='changeDisciplines()'>
+          <mat-select [(ngModel)]='sport' name='sport' required [(value)]='sport' (valueChange)='changeDisciplines()'>
             <mat-option *ngFor="let spo of sports" [value]="spo.name">
               {{spo.name}}
             </mat-option>
@@ -40,7 +42,7 @@
       <td>
         <mat-form-field appearance="legacy">
           <mat-label>Select discpline</mat-label>
-          <mat-select [(ngModel)]='discipline' name='discipline' required>
+          <mat-select [(ngModel)]='discipline' name='discipline' [(value)]='discipline' required>
             <mat-option *ngFor="let disc of disciplines" [value]="disc">
               {{disc}}
             </mat-option>
@@ -65,3 +67,9 @@
     </tr>
   </table>
 </form>
+</mat-tab>
+<mat-tab label="Load from file">
+  <input type='file' (change)="fileChanged($event)" accept=".json">
+  <button mat-raised-button color='primary' (click)="uploadFile()">Upload file</button>
+</mat-tab>
+</mat-tab-group>

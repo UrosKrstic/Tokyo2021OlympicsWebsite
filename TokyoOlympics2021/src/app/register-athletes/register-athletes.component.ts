@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FilestackService } from '@filestack/angular';
 import { AthletesService } from '../athletes.service';
 import { RegistrationResponse } from '../model/registrationresponse';
 import { Sport } from '../model/sport.model';
@@ -11,7 +13,10 @@ import { SportsService } from '../sports.service';
 })
 export class RegisterAthletesComponent implements OnInit {
 
-  constructor(private sportService: SportsService, private athletesService: AthletesService) {
+  constructor(private sportService: SportsService,
+    private athletesService: AthletesService,
+    private filestackService: FilestackService,
+    private http: HttpClient) {
     // empty
   }
 
@@ -32,6 +37,8 @@ export class RegisterAthletesComponent implements OnInit {
       }
     });
   }
+
+  file: any = null;
 
   name!: string;
   gender!: string;
@@ -83,4 +90,29 @@ export class RegisterAthletesComponent implements OnInit {
     }
   }
 
+  fileChanged(e: any) {
+    this.file = e.target.files[0];
+  }
+
+  uploadFile() {
+    let currentuserStr = localStorage.getItem('currentuser');
+    if (this.file != null && currentuserStr != null) {
+      let currentuser = JSON.parse(currentuserStr);
+      let fr = new FileReader();
+      fr.readAsText(this.file, "UTF-8");
+      fr.onload = () => {
+        if (fr.result != null) {
+          console.log(JSON.parse(fr.result.toString()));
+          let athletes = JSON.parse(fr.result.toString());
+          athletes.forEach((athlete: any) => {
+            console.log(athlete);
+            athlete.disciplines.forEach((discipline: string) =>
+              this.athletesService.addAthlete(athlete.name, athlete.gender, currentuser.country, athlete.sport, discipline).subscribe(
+                res => console.log('success: ' + res)
+              ));
+          });
+        }
+      }
+    }
+  }
 }

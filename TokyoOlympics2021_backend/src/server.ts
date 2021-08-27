@@ -189,5 +189,22 @@ router.route('/addathlete').post((req, res) => {
     });
 });
 
+router.route('/getathletes').post((req, res) => {
+    let name = '^' + req.body.name + '$';
+    let gender = '^' + req.body.gender + '$';
+    let coun = '^' + req.body.country + '$';
+    let sport_name = '^' + req.body.sport + '$';
+    let discipline = '^' + req.body.discipline + '$';
+    console.log(name + ',' + gender + ',' + coun + ',' + sport_name + ',' + discipline);
+    athlete.find({'name': {$regex: name}, 'gender': {$regex: gender}, 'country': {$regex: coun}, 'sport': {$regex: sport_name}, 'disciplines': {$elemMatch: {$regex: discipline}}}, (err, athletes) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.json(athletes);
+        }
+    });
+});
+
 app.use('/', router);
 app.listen(4000, () => console.log(`Express server running on port 4000`));

@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { MatInputModule } from '@angular/material/input';
@@ -20,6 +21,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTableModule } from '@angular/material/table';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 import { FilestackModule } from '@filestack/angular';
 
@@ -30,6 +34,11 @@ import { AthletesComponent } from './athletes/athletes.component';
 import { MedalsComponent } from './medals/medals.component';
 import { RegisterAthletesComponent } from './register-athletes/register-athletes.component';
 import { AddsportComponent } from './addsport/addsport.component';
+import { CompetitionComponent } from './competition/competition.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { UpdatecompComponent } from './updatecomp/updatecomp.component';
+import { ResultsCompetitionComponent } from './results-competition/results-competition.component';
+import { AddresultsComponent } from './addresults/addresults.component';
 
 
 @NgModule({
@@ -41,7 +50,11 @@ import { AddsportComponent } from './addsport/addsport.component';
     AthletesComponent,
     MedalsComponent,
     RegisterAthletesComponent,
-    AddsportComponent
+    AddsportComponent,
+    CompetitionComponent,
+    UpdatecompComponent,
+    ResultsCompetitionComponent,
+    AddresultsComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +75,10 @@ import { AddsportComponent } from './addsport/addsport.component';
     MatRadioModule,
     MatCheckboxModule,
     MatTableModule,
+    MatStepperModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

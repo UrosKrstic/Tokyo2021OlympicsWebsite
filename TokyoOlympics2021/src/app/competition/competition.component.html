@@ -1,0 +1,115 @@
+<h1>Add Competition</h1>
+<mat-stepper linear="true" orientation='vertical' #stepper>
+<mat-step [stepControl]="firstFormGroup">
+<form [formGroup]='firstFormGroup'>
+  <ng-template matStepLabel>Fill out competition information</ng-template>
+  <table>
+    <tr>
+      <td>
+        <mat-form-field appearance="legacy">
+          <mat-label>Select sport</mat-label>
+          <mat-select formControlName="firstCtrl" [(ngModel)]='sport' name='sport' required [(value)]='sport' (valueChange)='changeDisciplines()'>
+            <mat-option *ngFor="let spo of sports" [value]="spo.name">
+              {{spo.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field appearance="legacy">
+          <mat-label>Select discpline</mat-label>
+          <mat-select formControlName="firstCtrl" [(ngModel)]='discipline' name='discipline' [(value)]='discipline' required>
+            <mat-option *ngFor="let disc of disciplines" [value]="disc">
+              {{disc}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field appearance="legacy">
+          <mat-label>Select format</mat-label>
+          <mat-select formControlName="firstCtrl" [(ngModel)]='format' name='discipline' [(value)]='format' required>
+            <mat-option *ngFor="let for of formats" [value]="for">
+              {{for}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field appearance="legacy">
+          <mat-label>Select type</mat-label>
+          <mat-select formControlName="firstCtrl" [(ngModel)]='gender' name='discipline' [(value)]='gender' required>
+            <mat-option value='male'>
+              Men
+            </mat-option>
+            <mat-option value='female'>
+              Women
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field appearance="legacy">
+          <mat-label>Select delegate</mat-label>
+          <mat-select formControlName="firstCtrl" [(ngModel)]='delegate' name='discipline' [(value)]='delegate' required>
+            <mat-option *ngFor="let del of delegates" [value]="delegates">
+              {{del.first_name}} {{del.last_name}} [{{del.country}}]
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button mat-button matStepperNext (click)='getathletes()'>Next</button>
+      </td>
+    </tr>
+  </table>
+</form>
+</mat-step>
+<mat-step>
+  <form [formGroup]='firstFormGroup'>
+    <ng-template matStepLabel>Choose eligible athletes for competition</ng-template>
+    <table>
+      <tr>
+        <td>{{this.formatInfo}}</td>
+      </tr>
+      <tr>
+        <td>Choose athletes:</td>
+      </tr>
+      <tr *ngFor="let athl of athletes">
+        <td>
+          <section>
+            <mat-checkbox  [value]='athl.name' (change)='checkAthlete(athl)'>{{athl.name}},{{athl.country}}</mat-checkbox>
+          </section>
+        </td>
+      </tr>
+      <tr>
+        <td><button mat-button matStepperNext (click)='verifyFormat()' [disabled]='formatIncorrect'>Next</button></td>
+      </tr>
+      <tr>
+        <td><button mat-button matStepperPrevious>Back</button></td>
+      </tr>
+    </table>
+  </form>
+</mat-step>
+<mat-step>
+  <ng-template matStepLabel>Finish the competition creation</ng-template>
+  <button mat-raised-button color="primary" (click)='add()'>Create</button>
+  <button mat-button matStepperPrevious>Back</button>
+  <span style="white-space: pre; color: green">
+    {{message}}
+  </span>
+  <span style="white-space: pre; color: red">
+    {{errorMessage}}
+  </span>
+</mat-step>
+</mat-stepper>

@@ -6,6 +6,7 @@ import user from './model/user';
 import country from './model/country';
 import sport from './model/sport';
 import athlete from './model/athlete';
+import competition from './model/competition';
 
 const app = express();
 
@@ -63,6 +64,18 @@ router.route('/getallusers').post((req, res) => {
         else {
             res.json(users);
             console.log(users);
+        }
+    });
+});
+
+router.route('/getalldelegates').post((req, res) => {
+    user.find({'type': 'delegate'}, (err, us) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.json(us);
+            console.log(us);
         }
     });
 });
@@ -202,6 +215,164 @@ router.route('/getathletes').post((req, res) => {
         }
         else {
             res.json(athletes);
+        }
+    });
+});
+
+router.route('/getathletes2').post((req, res) => {
+    let sport_name = req.body.sport;
+    let discipline = req.body.discipline;
+    let gender = req.body.gender;
+    athlete.find({'sport': sport_name, 'disciplines': discipline, 'gender': gender}, (er, athletes) => {
+        if (er) {
+            console.log(er);
+        }
+        else {
+            res.json(athletes);
+        }
+    });
+});
+
+router.route('/addcompetition').post((req, res) => {
+    let name = req.body.name;
+    let format = req.body.format;
+    let type = req.body.type;
+    let sport_name = req.body.sport;
+    let discipline = req.body.discipline;
+    let athletes = req.body.athletes;
+    let delegate = req.body.delegate;
+    console.log(JSON.stringify(delegate));
+    let new_competition = new competition({
+        name: name,
+        format: format,
+        type: type,
+        sport: sport_name,
+        discipline: discipline,
+        athletes: athletes,
+        delegate: delegate});
+    new_competition.save().then(() => {
+        res.status(200).json({'user':'ok'});
+        console.log('ne plaki');
+    }).catch(er => {
+        console.log(er);
+        res.status(400).json({'user':'no'});
+    });
+});
+
+router.route('/getcompetition').post((req, res) => {
+    // empty for now
+});
+
+router.route('/getcompetitionfordelegate').post((req, res) => {
+    let username = req.body.username;
+    competition.find({'delegate': {$elemMatch: {'username': username}}, 'venue': {$exists: false}, 'startdatetime': {$exists: false}}, (er, delegates) => {
+        if (er) {
+            console.log(er);
+        }
+        else {
+            res.json(delegates);
+        }
+    });
+});
+
+router.route('/getscheduledcompetitionfordelegate').post((req, res) => {
+    let username = req.body.username;
+    competition.find({'delegate': {$elemMatch: {'username': username}}, 'finished': {$exists: false}, 'venue': {$exists: true}, 'startdatetime': {$exists: true}}, (err, competitions) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.json(competitions);
+        }
+    });
+});
+
+router.route('/updatecompetition').post((req, res) => {
+    let sport_name = req.body.sport;
+    let discipline = req.body.discipline;
+    let type = req.body.type;
+    let venue = req.body.venue;
+    let startdatetime = req.body.startdatetime;
+    console.log(startdatetime);
+    competition.updateOne({sport: sport_name, discipline: discipline, type: type}, {$set: {'venue': venue, 'startdatetime': startdatetime}}, (err, response)=>{
+        if (err) {
+            console.log(err);
+            res.status(200).json({'user':'no'});
+        }
+        else {
+            res.status(200).json({'user':'ok'});
+        }
+    });
+});
+
+router.route('/saveresults').post((req, res) => {
+    let sport_name = req.body.sport;
+    let discipline = req.body.discipline;
+    let type = req.body.type;
+    let athletes_results_pair = req.body.athletes_results_pair;
+    let response_counter = 0, total_responses = 7;
+    let error_occured = false;
+    console.log(JSON.stringify(athletes_results_pair));
+    competition.updateOne({sport: sport_name, discipline: discipline, type: type}, {$set: {'finished': true}}, (error, response)=> {
+        response_counter++;
+        if (error) {
+            console.log(error);
+            res.status(200).json({'user':'no'});
+            error_occured = true;
+        }
+        console.log(`response_counter: ${response_counter}, comp update to finished, error: ${error_occured}`);
+        if (!error_occured && response_counter == total_responses) {
+            res.status(200).json({'user': 'ok'});
+        }
+    });
+    for (let i = 0; i < 3; i++) {
+        athlete.updateOne({name: athletes_results_pair[i].athlete.name}, {$set: {'isMedalWinner': true}}, (err, response) => {
+            response_counter++;
+            if (err) {
+                console.log(err);
+                res.status(200).json({'user':'no'});
+                error_occured = true;
+            }
+            console.log(`response_counter: ${response_counter}, athlete[${i}] updated, error: ${error_occured}`);
+            if (!error_occured && response_counter == total_responses) {
+                res.status(200).json({'user': 'ok'});
+            }
+        });
+    }
+    country.updateOne({name: athletes_results_pair[0].athlete.country}, {$inc: {'goldMedals': 1}}, (er, response) => {
+        response_counter++;
+        if (er) {
+            console.log(er);
+            res.status(200).json({'user':'no'});
+            error_occured = true;
+        }
+        console.log(`response_counter: ${response_counter}, country[0] updated, error: ${error_occured}`);
+        if (!error_occured && response_counter == total_responses) {
+            res.status(200).json({'user': 'ok'});
+        }
+    });
+    country.updateOne({name: athletes_results_pair[1].athlete.country}, {$inc: {'silverMedals': 1}}, (er, response) => {
+        response_counter++;
+        if (er) {
+            console.log(er);
+            res.status(200).json({'user':'no'});
+            error_occured = true;
+        }
+        console.log(`response_counter: ${response_counter}, country[1] updated, error: ${error_occured}`);
+        if (!error_occured && response_counter == total_responses) {
+            res.status(200).json({'user': 'ok'});
+        }
+    });
+    country.updateOne({name: athletes_results_pair[2].athlete.country}, {$inc: {'bronzeMedals': 1}}, (er, response) => {
+        response_counter++;
+        if (er) {
+            console.log(er);
+            res.status(200).json({'user':'no'});
+            error_occured = true;
+        }
+        console.log(`response_counter: ${response_counter}, country[2] updated, error: ${error_occured}`);
+        if (!error_occured && response_counter == total_responses) {
+            res.status(200).json({'user': 'ok'});
         }
     });
 });

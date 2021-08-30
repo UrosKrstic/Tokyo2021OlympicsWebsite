@@ -4,4 +4,5 @@ export class Athlete {
   sport!: string;
   disciplines!: string[];
   country!: string;
+  isMedalWinner!: boolean
 }

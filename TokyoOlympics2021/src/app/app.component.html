@@ -3,14 +3,20 @@
 <button mat-raised-button color="secondary"><a routerLink='countries'>Countries</a></button>
 <button mat-raised-button color="secondary"><a routerLink='medals'>Medals</a></button>
 <button mat-raised-button color="secondary"><a routerLink='athletes'>Athletes</a></button>
-<button mat-raised-button color="secondary"><a routerLink='addsports'>Add Sports</a></button>
+<button mat-raised-button color="secondary"><a routerLink='addsports'>Add Sport</a></button>
+<button mat-raised-button color="secondary" [matMenuTriggerFor]="competition">Competition</button>
+  <mat-menu #competition="matMenu" yPosition="below">
+    <button mat-menu-item><a routerLink='addcompetition'>Add Competition</a></button>
+    <button mat-menu-item><a routerLink='updatecompetition'>Update Competition</a></button>
+    <button mat-menu-item><a routerLink='resultscompetition'>Competition Results</a></button>
+  </mat-menu>
 <button mat-raised-button color="secondary"><a routerLink='registerathletes'>Register Athletes</a></button>
 <button mat-raised-button [matMenuTriggerFor]="menu" aria-label="Nalog" color="secondary">
   <mat-icon>account_circle</mat-icon>
 </button>
-<mat-menu #menu="matMenu" yPosition="below">
-  <button mat-menu-item><a routerLink='login'>Prijava</a></button>
-  <button mat-menu-item><a routerLink='register'>Registracija</a></button>
-  <button mat-menu-item (click)='logout()'>Odjava</button>
-</mat-menu>
+  <mat-menu #menu="matMenu" yPosition="below">
+    <button mat-menu-item><a routerLink='login'>Prijava</a></button>
+    <button mat-menu-item><a routerLink='register'>Registracija</a></button>
+    <button mat-menu-item (click)='logout()'>Odjava</button>
+  </mat-menu>
 <router-outlet></router-outlet>

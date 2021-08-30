@@ -1,0 +1,55 @@
+<table mat-table [dataSource]="competitions" style="width: 100%;" class="mat-elevation-z8">
+  <ng-container matColumnDef="sport">
+    <th mat-header-cell *matHeaderCellDef> Sport </th>
+    <td mat-cell *matCellDef="let competition"> {{competition.sport}} </td>
+  </ng-container>
+  <ng-container matColumnDef="discipline">
+    <th mat-header-cell *matHeaderCellDef> Discipline </th>
+    <td mat-cell *matCellDef="let competition"> {{competition.discipline}} </td>
+  </ng-container>
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef> Type </th>
+    <td mat-cell *matCellDef="let competition"> {{competition.type}} </td>
+  </ng-container>
+  <ng-container matColumnDef="venue">
+    <th mat-header-cell *matHeaderCellDef> Venue </th>
+    <td mat-cell *matCellDef="let competition" style="width: 100px">
+      <mat-select name='venue' [(value)]='competition.venue'>
+        <mat-option *ngFor="let ven of venues" [value]="ven">
+          {{ven}}
+        </mat-option>
+      </mat-select>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="start date" >
+    <th mat-header-cell *matHeaderCellDef>Start date</th>
+    <td mat-cell *matCellDef="let competition">
+      <input matInput [matDatepicker]="picker" (dateInput)='setDate(competition, $event)' style="width: 100px;">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker style="width: 100px;"></mat-datepicker>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="start time">
+    <th mat-header-cell *matHeaderCellDef>Start time</th>
+    <td mat-cell *matCellDef="let competition">
+        <mat-select style="width:45px">
+          <mat-option *ngFor="let h of hours" [value]="h" (click)='setHour(competition, h)'>
+            {{h}}h
+          </mat-option>
+        </mat-select>
+        <mat-select style="width:60px">
+          <mat-option *ngFor="let min of minutes" [value]="min" (click)='setMinute(competition, min)'>
+            {{min}}min
+          </mat-option>
+        </mat-select>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="schedule">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let competition">
+      <button (click)='scheduleCompetition(competition)'>schedule</button>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

@@ -15,7 +15,10 @@ with open(filename, 'w') as file:
     file.write('  {\n')
     file.write('    "name": "{0}",\n'.format(country_names[i].text))
     file.write('    "flagImgSrc": "../../assets/{0}.png",\n'.format(country_names[i].text))
-    file.write('    "numberOfAthletes": 0\n')
+    file.write('    "numberOfAthletes": 0,\n')
+    file.write('    "goldMedals": 0,\n')
+    file.write('    "silverMedals": 0,\n')
+    file.write('    "bronzeMedals": 0\n')
     if i + 1 == len(imgs):
       file.write('  }\n')
     else:

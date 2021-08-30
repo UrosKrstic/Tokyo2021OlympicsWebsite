@@ -45,4 +45,13 @@ export class AthletesService {
     }
     return this.http.post(`${this.uri}/getathletes`, data);
   }
+
+  getAthletes2(sport: string, discipline: string, gender: string) {
+    const data = {
+      sport: sport,
+      discipline: discipline,
+      gender: gender
+    }
+    return this.http.post(`${this.uri}/getathletes2`, data);
+  }
 }

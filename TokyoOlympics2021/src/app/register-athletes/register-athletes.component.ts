@@ -47,7 +47,7 @@ export class RegisterAthletesComponent implements OnInit {
   disciplines: string[] = [];
   discipline!: string;
   errorMessage!: string;
-  message!: string;
+  message: string = '';
 
   register(): void {
     let currentuserStr = localStorage.getItem('currentuser');
@@ -108,7 +108,23 @@ export class RegisterAthletesComponent implements OnInit {
             console.log(athlete);
             athlete.disciplines.forEach((discipline: string) =>
               this.athletesService.addAthlete(athlete.name, athlete.gender, currentuser.country, athlete.sport, discipline).subscribe(
-                res => console.log('success: ' + res)
+                res => {
+                  if (res) {
+                    let response = res as RegistrationResponse;
+                    if (response.user == 'ok') {
+                      this.message += `\nSuccessfully registered: ${athlete.name}, sport: ${athlete.sport}, discipline: ${discipline}, country: ${currentuser.country}`;
+                      this.errorMessage = '';
+                    }
+                    else {
+                      this.message = '';
+                      this.errorMessage += `\nUnsuccessfully registered: ${athlete.name}, sport: ${athlete.sport}, discipline: ${discipline}, country: ${currentuser.country}`;
+                    }
+                  }
+                  else {
+                    this.message = '';
+                    this.errorMessage = `\nUnsuccessfully registered: ${athlete.name}, sport: ${athlete.sport}, discipline: ${discipline}, country: ${currentuser.country}`;
+                  }
+                }
               ));
           });
         }

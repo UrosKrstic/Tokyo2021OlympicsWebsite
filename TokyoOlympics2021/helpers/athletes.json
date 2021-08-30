@@ -1,6 +1,24 @@
 [
   {
-    "name": "Bogdan Bebic",
+    "name": "Ragnar Lothbrok",
+    "gender": "male",
+    "sport": "Athletics",
+    "disciplines": ["400m running"]
+  },
+  {
+    "name": "Haftor Bjornsson",
+    "gender": "male",
+    "sport": "Athletics",
+    "disciplines": ["400m running"]
+  },
+  {
+    "name": "Nemanja Vidic",
+    "gender": "male",
+    "sport": "Athletics",
+    "disciplines": ["400m running"]
+  },
+  {
+    "name": "Vuk Karadzic",
     "gender": "male",
     "sport": "Athletics",
     "disciplines": ["400m running"]

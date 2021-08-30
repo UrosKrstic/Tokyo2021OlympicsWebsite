@@ -11,7 +11,10 @@ let Country = new Schema({
     },
     numberOfAthletes: {
         type: Number
-    }
+    },
+    goldMedals: Number,
+    silverMedals: Number,
+    bronzeMedals: Number
 });
 
 export default mongoose.model('Countries', Country, 'Countries');

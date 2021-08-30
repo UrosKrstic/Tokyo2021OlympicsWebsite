@@ -17,7 +17,8 @@ let Athlete = new Schema({
     },
     disciplines: [{
         type: String
-    }]
+    }],
+    isMedalWinner: Boolean
 });
 
 export default mongoose.model('Athlete', Athlete, 'Athletes');

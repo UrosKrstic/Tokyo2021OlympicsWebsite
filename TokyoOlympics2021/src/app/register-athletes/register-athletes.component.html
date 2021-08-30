@@ -68,8 +68,14 @@
   </table>
 </form>
 </mat-tab>
-<mat-tab label="Load from file">
+<mat-tab label="Load from JSON file">
   <input type='file' (change)="fileChanged($event)" accept=".json">
-  <button mat-raised-button color='primary' (click)="uploadFile()">Upload file</button>
+  <button mat-raised-button color='primary' (click)="uploadFile()">Upload file</button><br>
+  <span style="white-space: pre; color: green">
+    {{message}}
+  </span>
+  <span style="white-space: pre; color: red">
+    {{errorMessage}}
+  </span>
 </mat-tab>
 </mat-tab-group>

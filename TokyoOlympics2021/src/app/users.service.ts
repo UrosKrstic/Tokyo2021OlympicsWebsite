@@ -84,4 +84,8 @@ export class UsersService {
   getAllUsers() {
     return this.http.post(`${this.uri}/getallusers`, null);
   }
+
+  getAllDelegates() {
+    return this.http.post(`${this.uri}/getalldelegates`, null);
+  }
 }

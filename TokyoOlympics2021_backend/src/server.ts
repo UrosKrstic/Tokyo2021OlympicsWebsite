@@ -7,6 +7,7 @@ import country from './model/country';
 import sport from './model/sport';
 import athlete from './model/athlete';
 import competition from './model/competition';
+import bracket from './model/bracket';
 
 const app = express();
 
@@ -251,7 +252,48 @@ router.route('/addcompetition').post((req, res) => {
         athletes: athletes,
         delegate: delegate});
     new_competition.save().then(() => {
-        res.status(200).json({'user':'ok'});
+        if (sport_name == 'Tennis') {
+            let new_bracket;
+            if (format == 'tennis singles - 4 seeds') {
+                new_bracket = new bracket({
+                    sport: sport_name,
+                    discipline: discipline,
+                    type: type,
+                    current_lvl: 1,
+                    total_level: 1,
+                    bracket: [0, 3, 2, 1]
+                });
+            }
+            else if (format == 'tennis singles - 8 seeds') {
+                new_bracket = new bracket({
+                    sport: sport_name,
+                    discipline: discipline,
+                    type: type,
+                    current_lvl: 2,
+                    total_level: 2,
+                    bracket: [0, 7, 4, 3, 2, 5, 6, 1]
+                });
+            }
+            else if (format == 'tennis singles - 16 seeds') {
+                new_bracket = new bracket({
+                    sport: sport_name,
+                    discipline: discipline,
+                    type: type,
+                    current_lvl: 3,
+                    total_level: 3,
+                    bracket: [0, 15, 8, 7, 4, 11, 12, 3, 2, 13, 10, 5, 6, 9, 14, 1]
+                });
+            }
+            new_bracket.save().then(() => {
+                res.status(200).json({'user':'ok'});
+            }).catch(er => {
+                console.log(er);
+                res.status(400).json({'user':'no'});
+            });
+        }
+        else {
+            res.status(200).json({'user':'ok'});
+        }
         console.log('ne plaki');
     }).catch(er => {
         console.log(er);
@@ -259,13 +301,23 @@ router.route('/addcompetition').post((req, res) => {
     });
 });
 
-router.route('/getcompetition').post((req, res) => {
-    // empty for now
+router.route('/getbracket').post((req, res) => {
+    let sport_name = req.body.sport;
+    let discipline = req.body.discipline;
+    let type = req.body.type;
+    bracket.findOne({'sport': sport_name, 'discipline': discipline, 'type': type}, (er, brack) => {
+        if (er) {
+            console.log(er);
+        }
+        else {
+            res.json(brack);
+        }
+    });
 });
 
 router.route('/getcompetitionfordelegate').post((req, res) => {
     let username = req.body.username;
-    competition.find({'delegate': {$elemMatch: {'username': username}}, 'venue': {$exists: false}, 'startdatetime': {$exists: false}}, (er, delegates) => {
+    competition.find({'delegate': {$elemMatch: {'username': username}}, 'finished': {$exists: false}, 'venue': {$exists: false}, 'startdatetime': {$exists: false}}, (er, delegates) => {
         if (er) {
             console.log(er);
         }
@@ -295,6 +347,23 @@ router.route('/updatecompetition').post((req, res) => {
     let startdatetime = req.body.startdatetime;
     console.log(startdatetime);
     competition.updateOne({sport: sport_name, discipline: discipline, type: type}, {$set: {'venue': venue, 'startdatetime': startdatetime}}, (err, response)=>{
+        if (err) {
+            console.log(err);
+            res.status(200).json({'user':'no'});
+        }
+        else {
+            res.status(200).json({'user':'ok'});
+        }
+    });
+});
+
+router.route('/savebracket').post((req, res) => {
+    let sport_name = req.body.sport;
+    let discipline = req.body.discipline;
+    let type = req.body.type;
+    let new_level = req.body.new_level;
+    let brack = req.body.bracket;
+    bracket.updateOne({sport: sport_name, discipline: discipline, type: type}, {$set: {'current_lvl': new_level, 'bracket': brack}}, (err, response)=>{
         if (err) {
             console.log(err);
             res.status(200).json({'user':'no'});

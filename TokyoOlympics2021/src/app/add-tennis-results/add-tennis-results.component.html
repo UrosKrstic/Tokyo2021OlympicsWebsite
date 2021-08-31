@@ -1,0 +1,26 @@
+<h1>{{competition.sport}} {{competition.discipline}} - Results {{results_heading}}</h1>
+<form>
+<table mat-table [dataSource]="matches" style="width: 100%;" class="mat-elevation-z8">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Athletes </th>
+    <td mat-cell *matCellDef="let match">({{match.seeding_1 + 1}}) {{match.athlete_name_1}} [{{match.athlete_country_1}}] vs ({{match.seeding_2 + 1}}) {{match.athlete_name_2}} [{{match.athlete_country_2}}]</td>
+  </ng-container>
+  <ng-container matColumnDef="result">
+    <th mat-header-cell *matHeaderCellDef> Result </th>
+    <td mat-cell *matCellDef="let match">
+      <mat-form-field appearance="legacy">
+        <mat-select name='result'>
+          <mat-option value='2-0' (click)='updateResults(match, true)'>2-0</mat-option>
+          <mat-option value='2-1' (click)='updateResults(match, true)'>2-1</mat-option>
+          <mat-option value='0-2' (click)='updateResults(match, false)'>0-2</mat-option>
+          <mat-option value='1-2' (click)='updateResults(match, false)'>1-2</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<button (click)='saveresults()'>Save Results</button>
+</form>
+<div style="color: red;">{{errorMessage}}</div>

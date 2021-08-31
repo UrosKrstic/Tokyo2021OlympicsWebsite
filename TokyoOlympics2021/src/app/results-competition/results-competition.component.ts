@@ -30,6 +30,11 @@ export class ResultsCompetitionComponent implements OnInit {
 
   addResults(competition: Competition) {
     localStorage.setItem('comp', JSON.stringify(competition));
-    this.router.navigate(['/' + this.router.url + '/addresults']);
+    if (competition.sport == 'Tennis') {
+      this.router.navigate(['/' + this.router.url + '/addtennisresults']);
+    }
+    else {
+      this.router.navigate(['/' + this.router.url + '/addresults']);
+    }
   }
 }

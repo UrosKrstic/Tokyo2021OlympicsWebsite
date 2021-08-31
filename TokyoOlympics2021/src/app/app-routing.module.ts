@@ -1,6 +1,7 @@
 import { NgxMatDatetimePicker, NgxMatDatetimePickerModule } from '@angular-material-components/datetime-picker';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AddTennisResultsComponent } from './add-tennis-results/add-tennis-results.component';
 import { AddresultsComponent } from './addresults/addresults.component';
 import { AddsportComponent } from './addsport/addsport.component';
 import { AthletesComponent } from './athletes/athletes.component';
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path: 'updatecompetition', component: UpdatecompComponent, data: { plausableTypes: ['delegate']}, canActivate: [AuthenticationGuard]},
   {path: 'resultscompetition', component: ResultsCompetitionComponent, data: { plausableTypes: ['delegate']}, canActivate: [AuthenticationGuard]},
   {path: 'resultscompetition/addresults', component: AddresultsComponent, data: { plausableTypes: ['delegate']}, canActivate: [AuthenticationGuard]},
+  {path: 'resultscompetition/addtennisresults', component: AddTennisResultsComponent, data: { plausableTypes: ['delegate']}, canActivate: [AuthenticationGuard]},
   {path: 'registerathletes', component: RegisterAthletesComponent, data: { plausableTypes: ['leader']}, canActivate: [AuthenticationGuard]}
 ];
 

@@ -57,7 +57,7 @@ export class CompetitionComponent implements OnInit {
 
   name!: string;
   format!: string;
-  formats: string[] = ['individual - final 8', 'tennis singles', 'tennis doubles']
+  formats: string[] = ['individual - final 8', 'tennis singles - 4 seeds', 'tennis singles - 8 seeds', 'tennis singles - 16 seeds']
   gender!: string;
   sports!: Sport[];
   sport!: string;
@@ -65,9 +65,13 @@ export class CompetitionComponent implements OnInit {
   discipline!: string;
   athletes: Athlete[] = [];
   selectedAthletes: Athlete[] = [];
+  selectedNamesAndCountries: string[] = [];
   delegates: User[] = [];
   delegate!: User;
   formatInfo!: string;
+  numberOfTennisPlayers!: number;
+  seeds: number[] = [];
+  isTennis: boolean = false;
   formatErrorInfo: string = '';
   formatIncorrect: boolean = true;
   errorMessage: string = '';
@@ -95,15 +99,32 @@ export class CompetitionComponent implements OnInit {
         this.formatInfo = 'Select 8 athletes to compete.';
         break;
       }
-      case 'tennis singles': {
-        this.formatInfo = 'Select 8 tennis players to compete.';
+      case 'tennis singles - 4 seeds': {
+        this.formatInfo = 'Select 4 tennis players to compete.';
+        this.numberOfTennisPlayers = 4;
+        this.isTennis = true;
         break;
       }
-      case 'tennis doubles': {
-        this.formatInfo = 'Select 16 athletes (8 pairs of same nationality) to compete.';
+      case 'tennis singles - 8 seeds': {
+        this.formatInfo = 'Select 8 tennis players to compete.';
+        this.numberOfTennisPlayers = 8;
+        this.isTennis = true;
+        break;
+      }
+      case 'tennis singles - 16 seeds': {
+        this.formatInfo = 'Select 16 tennis players to compete.';
+        this.numberOfTennisPlayers = 16;
+        this.isTennis = true;
         break;
       }
     }
+
+    for (let i = 0; i < this.numberOfTennisPlayers; i++) {
+      this.seeds.push(i);
+      this.selectedAthletes.push(new Athlete('foo'));
+      this.selectedNamesAndCountries.push('');
+    }
+
     this.athletesService.getAthletes2(this.sport, this.discipline, this.gender).subscribe(res => {
       if (res) {
         let athletes: Athlete[] = res as Athlete[];
@@ -113,6 +134,18 @@ export class CompetitionComponent implements OnInit {
         console.log("no athletes meet criteria");
       }
     });
+  }
+
+  selectedTennisPlayer(seed: number, athl: Athlete) {
+    if (this.selectedAthletes[seed].name != 'foo') {
+      this.athletes.push(this.selectedAthletes[seed]);
+    }
+    this.selectedAthletes[seed] = athl;
+    this.selectedNamesAndCountries[seed] = athl.name + '[' + athl.country + ']';
+    this.athletes.splice(this.athletes.indexOf(athl), 1);
+    this.verifyFormat();
+    console.log('atheltes: ' + JSON.stringify(this.athletes));
+    console.log('selected: ' + JSON.stringify(this.selectedAthletes));
   }
 
   checkAthlete(athl: Athlete) {
@@ -127,29 +160,26 @@ export class CompetitionComponent implements OnInit {
   }
 
   verifyFormat() {
-    switch(this.format) {
-      case 'individual - final 8': {
-        if (this.selectedAthletes.length != 8) {
-          this.formatErrorInfo = 'Format error: 8 athletes must be picked!';
-          this.formatIncorrect = true;
-          console.log('FUK format maaaan');
-        }
-        else {
-          console.log('ready to go - format wise');
-          this.formatIncorrect = false;
-        }
-        break;
+    if (this.format == 'individual - final 8') {
+      if (this.selectedAthletes.length != 8) {
+        this.formatErrorInfo = 'Format error: 8 athletes must be picked!';
+        this.formatIncorrect = true;
+        console.log('FUK format maaaan');
       }
-      case 'tennis singles': {
-        this.formatInfo = 'Select 8 tennis players to compete.';
-        break;
-      }
-      case 'tennis doubles': {
-        this.formatInfo = 'Select 16 athletes (8 pairs of same nationality) to compete.';
-        break;
+      else {
+        console.log('ready to go - format wise');
+        this.formatIncorrect = false;
       }
     }
-
+    else {
+      for (let i = 0; i < this.numberOfTennisPlayers; i++) {
+        if (this.selectedAthletes[i].name == 'foo') {
+          this.formatIncorrect = true;
+          return;
+        }
+      }
+      this.formatIncorrect = false;
+    }
   }
 
   add(): void {
@@ -162,7 +192,16 @@ export class CompetitionComponent implements OnInit {
       this.selectedAthletes,
       this.delegate).subscribe(res => {
         console.log('lets go');
-        this.selectedAthletes = [];
+        if (this.isTennis) {
+          for (let i = 0; i < this.numberOfTennisPlayers; i++) {
+            this.seeds.push(i);
+            this.selectedAthletes.push(new Athlete('foo'));
+            this.selectedNamesAndCountries.push('');
+          }
+        }
+        else {
+          this.selectedAthletes = [];
+        }
         if (res) {
           console.log('lets go 2');
           let response = res as RegistrationResponse;

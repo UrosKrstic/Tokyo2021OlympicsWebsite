@@ -76,20 +76,55 @@
 </form>
 </mat-step>
 <mat-step>
-  <form [formGroup]='firstFormGroup'>
-    <ng-template matStepLabel>Choose eligible athletes for competition</ng-template>
+  <div *ngIf="!isTennis; else tennisSelectAthletes">
+    <form [formGroup]='firstFormGroup'>
+      <ng-template matStepLabel>Choose eligible athletes for competition</ng-template>
+      <table>
+        <tr>
+          <td>{{this.formatInfo}}</td>
+        </tr>
+        <tr>
+          <td>Choose athletes:</td>
+        </tr>
+        <tr *ngFor="let athl of athletes">
+          <td>
+            <section>
+              <mat-checkbox  [value]='athl.name' (change)='checkAthlete(athl)'>{{athl.name}},{{athl.country}}</mat-checkbox>
+            </section>
+          </td>
+        </tr>
+        <tr>
+          <td><button mat-button matStepperNext (click)='verifyFormat()' [disabled]='formatIncorrect'>Next</button></td>
+        </tr>
+        <tr>
+          <td><button mat-button matStepperPrevious>Back</button></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+  <ng-template #tennisSelectAthletes>
+    <form [formGroup]='secondFormGroup'>
+    <ng-template matStepLabel>Choose eligible tennis players for competition</ng-template>
     <table>
       <tr>
         <td>{{this.formatInfo}}</td>
       </tr>
       <tr>
-        <td>Choose athletes:</td>
+        <td>Choose tennis players:</td>
       </tr>
-      <tr *ngFor="let athl of athletes">
+      <tr *ngFor='let seed of seeds'>
         <td>
-          <section>
-            <mat-checkbox  [value]='athl.name' (change)='checkAthlete(athl)'>{{athl.name}},{{athl.country}}</mat-checkbox>
-          </section>
+          <mat-form-field appearance="legacy">
+            <mat-label>Select seed {{seed + 1}}</mat-label>
+            <mat-select name='athletes' [value]='selectedAthletes[seed].name'>
+              <mat-option *ngIf='selectedAthletes[seed].name != "foo"' [value]='selectedAthletes[seed].name'>
+                {{selectedAthletes[seed].name}}[{{selectedAthletes[seed].country}}]
+              </mat-option>
+              <mat-option *ngFor="let athlete of athletes" (click)='selectedTennisPlayer(seed, athlete)' >
+                {{athlete.name}}[{{athlete.country}}]
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </td>
       </tr>
       <tr>
@@ -99,7 +134,8 @@
         <td><button mat-button matStepperPrevious>Back</button></td>
       </tr>
     </table>
-  </form>
+    </form>
+  </ng-template>
 </mat-step>
 <mat-step>
   <ng-template matStepLabel>Finish the competition creation</ng-template>

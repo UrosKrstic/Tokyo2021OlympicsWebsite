@@ -1,26 +1,58 @@
 [
   {
-    "name": "Ragnar Lothbrok",
+    "name": "Thomas Shelby",
     "gender": "male",
-    "sport": "Athletics",
-    "disciplines": ["400m running"]
+    "country": "England",
+    "sport": "Tennis",
+    "disciplines": ["singles"]
   },
   {
-    "name": "Haftor Bjornsson",
+    "name": "Bjorn Ragnarsson",
     "gender": "male",
-    "sport": "Athletics",
-    "disciplines": ["400m running"]
+    "country": "Iceland",
+    "sport": "Tennis",
+    "disciplines": ["singles"]
   },
   {
-    "name": "Nemanja Vidic",
+    "name": "Nemanja Bjelica",
     "gender": "male",
-    "sport": "Athletics",
-    "disciplines": ["400m running"]
+    "country": "Serbia",
+    "sport": "Tennis",
+    "disciplines": ["singles"]
   },
   {
-    "name": "Vuk Karadzic",
+    "name": "Kobe Bryant",
     "gender": "male",
-    "sport": "Athletics",
-    "disciplines": ["400m running"]
+    "country": "USA",
+    "sport": "Tennis",
+    "disciplines": ["singles"]
+  },
+  {
+    "name": "Martin Jankowski",
+    "gender": "male",
+    "country": "Poland",
+    "sport": "Tennis",
+    "disciplines": ["singles"]
+  },
+  {
+    "name": "Kyle Lowry",
+    "gender": "male",
+    "country": "Canada",
+    "sport": "Tennis",
+    "disciplines": ["singles"]
+  },
+  {
+    "name": "Aca Lukas",
+    "gender": "male",
+    "country": "Montenegro",
+    "sport": "Tennis",
+    "disciplines": ["singles"]
+  },
+  {
+    "name": "Steve Nash",
+    "gender": "male",
+    "country": "South Africa",
+    "sport": "Tennis",
+    "disciplines": ["singles"]
   }
 ]

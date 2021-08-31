@@ -4,6 +4,7 @@ import { User } from "./user.model";
 export class Competition {
   sport!: string;
   discipline!: string;
+  format!: string;
   type!: string;
   venue!: string;
   athletes!: Athlete[];

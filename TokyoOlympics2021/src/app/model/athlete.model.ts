@@ -5,4 +5,8 @@ export class Athlete {
   disciplines!: string[];
   country!: string;
   isMedalWinner!: boolean
+
+  constructor(name: string) {
+    this.name = name;
+  }
 }

@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { AthletesService } from '../athletes.service';
 import { CountriesService } from '../countries.service';
 import { Athlete } from '../model/athlete.model';
@@ -12,7 +14,9 @@ import { SportsService } from '../sports.service';
   templateUrl: './athletes.component.html',
   styleUrls: ['./athletes.component.css']
 })
-export class AthletesComponent implements OnInit {
+export class AthletesComponent implements OnInit, AfterViewInit {
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private sportService: SportsService,
     private countriesService: CountriesService,
@@ -40,6 +44,12 @@ export class AthletesComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  dataSource!: MatTableDataSource<Athlete>;
+  isMedalWinner = false;
   name!: string;
   gender!: string;
   country: string = 'all';
@@ -50,6 +60,10 @@ export class AthletesComponent implements OnInit {
   discipline: string = 'all';
   athletes: Athlete[] = [];
   displayedColumns: string[] = ['name', 'country', 'sport', 'disciplines', 'gender'];
+
+  toggleIsMedalWinner() {
+    this.isMedalWinner = !this.isMedalWinner;
+  }
 
   changeDisciplines(): void {
     console.log('changing disciplines for sport: ' + this.sport);
@@ -66,10 +80,14 @@ export class AthletesComponent implements OnInit {
   }
 
   search(): void {
-    this.athletesService.getAthletes(this.name, this.country, this.sport, this.discipline, this.gender, "").subscribe(res => {
+    let medalWinner = this.isMedalWinner ? 'yes' : 'no';
+
+    this.athletesService.getAthletes(this.name, this.country, this.sport, this.discipline, this.gender, medalWinner).subscribe(res => {
       if (res) {
         let athletes: Athlete[] = res as Athlete[];
         this.athletes = athletes;
+        this.dataSource = new MatTableDataSource(this.athletes);
+        this.dataSource.paginator = this.paginator;
         console.log(JSON.stringify(this.athletes));
       }
       else {

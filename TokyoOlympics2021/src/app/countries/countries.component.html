@@ -1,12 +1,22 @@
-<table>
-  <tr>
-    <td>Name</td>
-    <td>Flag</td>
-    <td>Number of athletes</td>
-  </tr>
-  <tr *ngFor='let country of countries'>
-    <td>{{country.name}}</td>
-    <td><img src="{{country.flagImgSrc}}" alt="wtf"></td>
-    <td>{{country.numberOfAthletes}}</td>
-  </tr>
+<h1>Countries</h1>
+<div class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSource" style="width: 100%;text-align: center;">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Name </th>
+    <td mat-cell *matCellDef="let country" style="width: 33%;">{{country.name}}</td>
+  </ng-container>
+  <ng-container matColumnDef="flag">
+    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Flag </th>
+    <td mat-cell *matCellDef="let country" style="width: 33%;">
+      <img src="{{country.flagImgSrc}}" width='55px' height='36px' [alt]="country.name">
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="athletecnt">
+    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Number of athletes </th>
+    <td mat-cell *matCellDef="let country" style="width: 33%;">{{country.numberOfAthletes}}</td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+<mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" aria-label="Select page of countries"></mat-paginator>
+</div>

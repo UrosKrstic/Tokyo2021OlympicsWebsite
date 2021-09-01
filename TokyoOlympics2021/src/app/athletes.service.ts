@@ -31,17 +31,18 @@ export class AthletesService {
   }
 
   getAthletes(name: string, country: string, sport: string, discipline: string, gender: string, wonMedals: string) {
-    if (name == null) name = '.*';
-    if (country == 'all'|| country == '') country = '.*';
+    if (name == null || name == '') name = '.*';
+    if (country == 'all' || country == '') country = '.*';
     if (sport == 'all' || sport == '') sport = '.*';
     if (discipline == 'all' || discipline == '') discipline = '.*';
-    if (gender == null) gender = '.*';
+    if (gender == null || gender == '' || gender == 'none') gender = '.*';
     const data = {
       name: name,
       gender: gender,
       country: country,
       sport: sport,
-      discipline: discipline
+      discipline: discipline,
+      wonMedals: wonMedals
     }
     return this.http.post(`${this.uri}/getathletes`, data);
   }

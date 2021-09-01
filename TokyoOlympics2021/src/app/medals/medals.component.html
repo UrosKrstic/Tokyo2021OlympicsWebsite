@@ -1,1 +1,28 @@
-<p>medals works!</p>
+<h1>Medals</h1>
+<div class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSource" style="width: 100%;text-align: center;">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Name </th>
+    <td mat-cell *matCellDef="let country" style="width: 20%;">{{country.name}}</td>
+  </ng-container>
+  <ng-container matColumnDef="gold">
+    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Gold </th>
+    <td mat-cell *matCellDef="let country" style="width: 20%;">{{country.goldMedals}}</td>
+  </ng-container>
+  <ng-container matColumnDef="silver">
+    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Silver </th>
+    <td mat-cell *matCellDef="let country" style="width: 20%;">{{country.silverMedals}}</td>
+  </ng-container>
+  <ng-container matColumnDef="bronze">
+    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Bronze </th>
+    <td mat-cell *matCellDef="let country" style="width: 20%;">{{country.bronzeMedals}}</td>
+  </ng-container>
+  <ng-container matColumnDef="total">
+    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Total </th>
+    <td mat-cell *matCellDef="let country" style="width: 20%;">{{country.goldMedals + country.silverMedals + country.bronzeMedals}}</td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" aria-label="Select page of countries"></mat-paginator>
+</div>

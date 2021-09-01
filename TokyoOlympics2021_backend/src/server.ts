@@ -177,6 +177,7 @@ router.route('/addathlete').post((req, res) => {
                     athlete.updateOne({name: name}, { $push: {disciplines: discipline} }, (e, a) => {
                         if (e) {
                             console.log(e);
+                            res.status(400).json({'user':'no'});
                         }
                         else {
                             res.status(200).json({'user':'ok'});
@@ -194,7 +195,16 @@ router.route('/addathlete').post((req, res) => {
                     disciplines: [discipline]
                 });
                 new_athlete.save().then(() => {
-                    res.status(200).json({'user':'ok'});
+                    console.log('country of new athlete: ' + coun);
+                    country.updateOne({name: coun}, {$inc: {'numberOfAthletes': 1}}, (e, r) => {
+                        if (err) {
+                            res.status(400).json({'user':'no'});
+                        }
+                        else {
+                            res.status(200).json({'user':'ok'});
+                        }
+                    })
+                    
                 }).catch(er => {
                     res.status(400).json({'user':'no'});
                 });
@@ -209,15 +219,29 @@ router.route('/getathletes').post((req, res) => {
     let coun = '^' + req.body.country + '$';
     let sport_name = '^' + req.body.sport + '$';
     let discipline = '^' + req.body.discipline + '$';
-    console.log(name + ',' + gender + ',' + coun + ',' + sport_name + ',' + discipline);
-    athlete.find({'name': {$regex: name}, 'gender': {$regex: gender}, 'country': {$regex: coun}, 'sport': {$regex: sport_name}, 'disciplines': {$elemMatch: {$regex: discipline}}}, (err, athletes) => {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            res.json(athletes);
-        }
-    });
+    let isWonMedals = req.body.wonMedals == 'yes';
+    console.log(name + ',' + gender + ',' + coun + ',' + sport_name + ',' + discipline + isWonMedals);
+    if (isWonMedals) {
+        athlete.find({'name': {$regex: name}, 'gender': {$regex: gender}, 'country': {$regex: coun}, 'sport': {$regex: sport_name}, 'disciplines': {$elemMatch: {$regex: discipline}}, 'isMedalWinner': true}, (err, athletes) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                res.json(athletes);
+            }
+        });
+    }
+    else {
+        athlete.find({'name': {$regex: name}, 'gender': {$regex: gender}, 'country': {$regex: coun}, 'sport': {$regex: sport_name}, 'disciplines': {$elemMatch: {$regex: discipline}}}, (err, athletes) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                res.json(athletes);
+            }
+        });
+    }
+    
 });
 
 router.route('/getathletes2').post((req, res) => {

@@ -1,22 +1,35 @@
-<h1>Tokyo Olympics 2021</h1>
-<button mat-raised-button color="secondary"><a routerLink='/'><mat-icon>home</mat-icon></a></button>
-<button mat-raised-button color="secondary"><a routerLink='countries'>Countries</a></button>
-<button mat-raised-button color="secondary"><a routerLink='medals'>Medals</a></button>
-<button mat-raised-button color="secondary"><a routerLink='athletes'>Athletes</a></button>
-<button mat-raised-button color="secondary"><a routerLink='addsports'>Add Sport</a></button>
-<button mat-raised-button color="secondary" [matMenuTriggerFor]="competition">Competition</button>
+
+<div style="text-align: center;">
+<img src="../assets/main logo.png" alt="" width="150px">
+</div>
+<mat-divider></mat-divider>
+<div style="display: flex;justify-content: center;">
+<img src="../assets/olympic_logo.svg" alt="">
+<button mat-button color="secondary"><a routerLink='/' routerLinkActive='activeroute' [routerLinkActiveOptions]="{exact:true}">Home</a></button>
+<button mat-button color="secondary"><a routerLink='/countries' routerLinkActive='activeroute'>Countries</a></button>
+<button mat-button color="secondary"><a routerLink='/medals' routerLinkActive='activeroute'>Medals</a></button>
+<button mat-button color="secondary"><a routerLink='/athletes' routerLinkActive='activeroute'>Athletes</a></button>
+<button mat-button color="secondary"><a routerLink='/addsports' routerLinkActive='activeroute'>Add Sport</a></button>
+<button mat-button color="secondary" [matMenuTriggerFor]="competition">Competition</button>
   <mat-menu #competition="matMenu" yPosition="below">
-    <button mat-menu-item><a routerLink='addcompetition'>Add Competition</a></button>
-    <button mat-menu-item><a routerLink='updatecompetition'>Update Competition</a></button>
-    <button mat-menu-item><a routerLink='resultscompetition'>Competition Results</a></button>
+    <button mat-menu-item><a routerLink='/addcompetition' routerLinkActive='activeroute'>Add Competition</a></button>
+    <button mat-menu-item><a routerLink='/updatecompetition' routerLinkActive='activeroute'>Update Competition</a></button>
+    <button mat-menu-item><a routerLink='/resultscompetition' routerLinkActive='activeroute'>Competition Results</a></button>
   </mat-menu>
-<button mat-raised-button color="secondary"><a routerLink='registerathletes'>Register Athletes</a></button>
-<button mat-raised-button [matMenuTriggerFor]="menu" aria-label="Nalog" color="secondary">
-  <mat-icon>account_circle</mat-icon>
+<button mat-button color="secondary"><a routerLink='/registerathletes' routerLinkActive='activeroute'>Register Athletes</a></button>
+<button mat-button [matMenuTriggerFor]="menu" aria-label="Nalog" color="secondary">
+  <mat-icon color='primary'>account_circle</mat-icon>
 </button>
   <mat-menu #menu="matMenu" yPosition="below">
-    <button mat-menu-item><a routerLink='login'>Prijava</a></button>
-    <button mat-menu-item><a routerLink='register'>Registracija</a></button>
-    <button mat-menu-item (click)='logout()'>Odjava</button>
+    <button mat-menu-item><a routerLink='/login' routerLinkActive='activeroute'>Login</a></button>
+    <button mat-menu-item><a routerLink='/register' routerLinkActive='activeroute'>Register</a></button>
+    <button mat-menu-item (click)='logout()'>Logut</button>
   </mat-menu>
+</div>
+
+<mat-divider></mat-divider>
+<div style="display: flex;justify-content: center;">
+<div style='width: 50%;'>
 <router-outlet></router-outlet>
+</div>
+</div>

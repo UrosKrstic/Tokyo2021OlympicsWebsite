@@ -1,28 +1,29 @@
-<table mat-table [dataSource]="competitions" style="width: 100%;" class="mat-elevation-z8">
+<h1>Competition Results</h1>
+<table mat-table [dataSource]="competitions" style="width: 100%;text-align: center;" class="mat-elevation-z8">
   <ng-container matColumnDef="sport">
-    <th mat-header-cell *matHeaderCellDef> Sport </th>
+    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Sport </th>
     <td mat-cell *matCellDef="let competition"> {{competition.sport}} </td>
   </ng-container>
   <ng-container matColumnDef="discipline">
-    <th mat-header-cell *matHeaderCellDef> Discipline </th>
+    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Discipline </th>
     <td mat-cell *matCellDef="let competition"> {{competition.discipline}} </td>
   </ng-container>
   <ng-container matColumnDef="type">
-    <th mat-header-cell *matHeaderCellDef> Type </th>
+    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Type </th>
     <td mat-cell *matCellDef="let competition"> {{competition.type}} </td>
   </ng-container>
   <ng-container matColumnDef="venue">
-    <th mat-header-cell *matHeaderCellDef> Venue </th>
+    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Venue </th>
     <td mat-cell *matCellDef="let competition" style="width: 100px"> {{competition.venue}}</td>
   </ng-container>
   <ng-container matColumnDef="start date and time" >
-    <th mat-header-cell *matHeaderCellDef>Start date and time</th>
+    <th mat-header-cell *matHeaderCellDef style="text-align: center;">Start date and time</th>
     <td mat-cell *matCellDef="let competition">{{competition.startdatetime}}</td>
   </ng-container>
   <ng-container matColumnDef="add results">
-    <th mat-header-cell *matHeaderCellDef>Add Results</th>
+    <th mat-header-cell *matHeaderCellDef style="text-align: center;">Add Results</th>
     <td mat-cell *matCellDef="let competition">
-      <button (click)='addResults(competition)'>add results</button>
+      <button mat-raised-button color='accent' (click)='addResults(competition)'>add results</button>
     </td>
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

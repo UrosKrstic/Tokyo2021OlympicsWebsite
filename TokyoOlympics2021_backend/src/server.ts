@@ -203,8 +203,7 @@ router.route('/addathlete').post((req, res) => {
                         else {
                             res.status(200).json({'user':'ok'});
                         }
-                    })
-                    
+                    });
                 }).catch(er => {
                     res.status(400).json({'user':'no'});
                 });

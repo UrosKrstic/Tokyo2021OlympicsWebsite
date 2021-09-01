@@ -23,7 +23,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import { MatDividerModule } from '@angular/material/divider';
 
 import { FilestackModule } from '@filestack/angular';
 
@@ -40,7 +40,6 @@ import { UpdatecompComponent } from './updatecomp/updatecomp.component';
 import { ResultsCompetitionComponent } from './results-competition/results-competition.component';
 import { AddresultsComponent } from './addresults/addresults.component';
 import { AddTennisResultsComponent } from './add-tennis-results/add-tennis-results.component';
-
 
 @NgModule({
   declarations: [
@@ -81,6 +80,7 @@ import { AddTennisResultsComponent } from './add-tennis-results/add-tennis-resul
     ReactiveFormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatDividerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

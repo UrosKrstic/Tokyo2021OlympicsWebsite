@@ -2,11 +2,11 @@
 <form>
 <table mat-table [dataSource]="matches" style="width: 100%;" class="mat-elevation-z8">
   <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Athletes </th>
+    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Athletes </th>
     <td mat-cell *matCellDef="let match">({{match.seeding_1 + 1}}) {{match.athlete_name_1}} [{{match.athlete_country_1}}] vs ({{match.seeding_2 + 1}}) {{match.athlete_name_2}} [{{match.athlete_country_2}}]</td>
   </ng-container>
   <ng-container matColumnDef="result">
-    <th mat-header-cell *matHeaderCellDef> Result </th>
+    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Result </th>
     <td mat-cell *matCellDef="let match">
       <mat-form-field appearance="legacy">
         <mat-select name='result'>

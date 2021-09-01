@@ -2,15 +2,15 @@
 <form>
 <table mat-table [dataSource]="competition.athletes" style="width: 100%;" class="mat-elevation-z8">
   <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let athlete"> {{athlete.name}} </td>
+    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Name </th>
+    <td mat-cell *matCellDef="let athlete" style="text-align: center;"> {{athlete.name}} </td>
   </ng-container>
   <ng-container matColumnDef="country">
-    <th mat-header-cell *matHeaderCellDef> Country </th>
+    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Country </th>
     <td mat-cell *matCellDef="let athlete"> {{athlete.country}} </td>
   </ng-container>
   <ng-container matColumnDef="result">
-    <th mat-header-cell *matHeaderCellDef> Result{{resultsFormat}} </th>
+    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Result{{resultsFormat}} </th>
     <td mat-cell *matCellDef="let athlete">
       <mat-form-field appearance="outline">
         <mat-label>enter result</mat-label>
@@ -21,6 +21,8 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<button (click)='saveresults()'>Save Results</button>
 </form>
+<div style='justify-content: center; display: flex; padding-top: 10px;'>
+  <button mat-raised-button color='accent' (click)='saveresults()'>Save Results</button>
+</div>
 <div style="color: red;">{{errorMessage}}</div>

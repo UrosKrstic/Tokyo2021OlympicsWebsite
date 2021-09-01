@@ -1,4 +1,10 @@
 <h1>Search Athletes</h1>
+<mat-expansion-panel>
+<mat-expansion-panel-header>
+<mat-panel-title>
+  Search Form
+</mat-panel-title>
+</mat-expansion-panel-header>
 <form>
   <table>
     <tr>
@@ -72,6 +78,7 @@
     </tr>
   </table>
 </form>
+</mat-expansion-panel>
 <table mat-table [dataSource]="dataSource" style="width: 100%;">
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Name </th>

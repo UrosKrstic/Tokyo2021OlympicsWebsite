@@ -24,6 +24,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { FilestackModule } from '@filestack/angular';
 
@@ -81,6 +82,7 @@ import { AddTennisResultsComponent } from './add-tennis-results/add-tennis-resul
     MatDatepickerModule,
     MatNativeDateModule,
     MatDividerModule,
+    MatExpansionModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

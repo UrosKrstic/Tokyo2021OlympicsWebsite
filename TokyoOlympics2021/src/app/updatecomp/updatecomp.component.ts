@@ -17,7 +17,7 @@ export class UpdatecompComponent implements OnInit {
 
   ngOnInit(): void {
     for (let i = 0; i < 60; i++) {
-      if (i >= 8 && i <= 20)
+      if (i >= 0 && i <= 23)
         this.hours.push(i);
       this.minutes.push(i);
     }
@@ -27,7 +27,8 @@ export class UpdatecompComponent implements OnInit {
       this.competitionService.getCompetitionForDelegate(currentuser.username).subscribe(res => {
         if (res) {
           this.competitions = res as Competition[];
-          console.log('competitions: ' + JSON.stringify(this.competitions));
+          this.competitions.forEach(comp => this.compToErrorMsgMap.set(comp, ''));
+          // console.log('competitions: ' + JSON.stringify(this.competitions));
         }
       });
     }
@@ -41,6 +42,8 @@ export class UpdatecompComponent implements OnInit {
   hour!: number;
   minutes: number[] = [];
   minute!: number;
+  errorMessage: string = '';
+  compToErrorMsgMap: Map<Competition, string> = new Map<Competition, string>();
 
   setDate(competition: Competition, event: MatDatepickerInputEvent<Date>) {
     if (event.value) {
@@ -66,14 +69,20 @@ export class UpdatecompComponent implements OnInit {
         let response = res as RegistrationResponse;
         if (response.user == 'ok') {
           console.log('DONE update');
-          window.location.reload();
+          if (competition.sport == 'Tennis') {
+            localStorage.setItem('comp', JSON.stringify(competition));
+            this.router.navigate(['/' + this.router.url + '/scheduletennis']);
+          }
+          else {
+            window.location.reload();
+          }
         }
         else {
-          console.log('unsuccessful update of competition');
+          this.compToErrorMsgMap.set(competition, 'unsuccessful update');
         }
       }
       else {
-        console.log('unsuccessful update of competition');
+        this.compToErrorMsgMap.set(competition, 'unsuccessful update');
       }
     });
   }

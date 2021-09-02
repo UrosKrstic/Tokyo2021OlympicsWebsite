@@ -51,7 +51,8 @@ let Competition = new Schema({
     athletes: [Athlete],
     delegate: [User],
     startdatetime: Date,
-    finished: Boolean
+    finished: Boolean,
+    isScheduled: Boolean
 });
 
 export default mongoose.model('Competitions', Competition, 'Competitions');

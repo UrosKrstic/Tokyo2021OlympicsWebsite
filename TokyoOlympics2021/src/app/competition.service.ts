@@ -61,4 +61,13 @@ export class CompetitionService {
     };
     return this.http.post(`${this.uri}/updatecompetition`, data);
   }
+
+  scheduleTennis(sport: string, discipline: string, type: string) {
+    const data = {
+      sport: sport,
+      discipline: discipline,
+      type: type
+    };
+    return this.http.post(`${this.uri}/scheduletennis`, data);
+  }
 }

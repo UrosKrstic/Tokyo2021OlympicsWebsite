@@ -273,7 +273,8 @@ router.route('/addcompetition').post((req, res) => {
         sport: sport_name,
         discipline: discipline,
         athletes: athletes,
-        delegate: delegate});
+        delegate: delegate,
+        isScheduled: false});
     new_competition.save().then(() => {
         if (sport_name == 'Tennis') {
             let new_bracket;
@@ -340,7 +341,7 @@ router.route('/getbracket').post((req, res) => {
 
 router.route('/getcompetitionfordelegate').post((req, res) => {
     let username = req.body.username;
-    competition.find({'delegate': {$elemMatch: {'username': username}}, 'finished': {$exists: false}, 'venue': {$exists: false}, 'startdatetime': {$exists: false}}, (er, delegates) => {
+    competition.find({'delegate': {$elemMatch: {'username': username}}, 'finished': {$exists: false}, 'isScheduled': false}, (er, delegates) => {
         if (er) {
             console.log(er);
         }
@@ -352,7 +353,7 @@ router.route('/getcompetitionfordelegate').post((req, res) => {
 
 router.route('/getscheduledcompetitionfordelegate').post((req, res) => {
     let username = req.body.username;
-    competition.find({'delegate': {$elemMatch: {'username': username}}, 'finished': {$exists: false}, 'venue': {$exists: true}, 'startdatetime': {$exists: true}}, (err, competitions) => {
+    competition.find({'delegate': {$elemMatch: {'username': username}}, 'finished': {$exists: false}, 'isScheduled': true}, (err, competitions) => {
         if (err) {
             console.log(err);
         }
@@ -367,11 +368,47 @@ router.route('/updatecompetition').post((req, res) => {
     let discipline = req.body.discipline;
     let type = req.body.type;
     let venue = req.body.venue;
-    let startdatetime = req.body.startdatetime;
-    console.log(startdatetime);
-    competition.updateOne({sport: sport_name, discipline: discipline, type: type}, {$set: {'venue': venue, 'startdatetime': startdatetime}}, (err, response)=>{
+    let startdatetime = new Date(req.body.startdatetime);
+    console.log('loc & time: ' + venue + startdatetime);
+    competition.find({'finished': {$exists: false}, 'venue': {$exists: true}, 'startdatetime': {$exists: true}, 'sport': {$ne: sport_name}, 'discipline': {$ne: discipline}, 'type': {$ne: type},}, (err, comps) => {
         if (err) {
-            console.log(err);
+            res.status(200).json({'user':'no'});
+        }
+        else {
+            let no_conflict = true;
+            comps.forEach(com => {
+                let comp = com.toObject();
+                console.log(comp.startdatetime.toString(), startdatetime.toString());
+                if (comp.startdatetime.toString() == startdatetime.toString() && comp.venue == venue) {
+                    no_conflict = false;
+                }
+            });
+            if (no_conflict) {
+                competition.updateOne({sport: sport_name, discipline: discipline, type: type}, {$set: {'venue': venue, 'startdatetime': startdatetime, 'isScheduled': true}}, (e, response)=>{
+                    if (e) {
+                        console.log(e);
+                        res.status(200).json({'user':'no'});
+                    }
+                    else {
+                        res.status(200).json({'user':'ok'});
+                    }
+                });
+            }
+            else {
+                res.status(200).json({'user':'no'});
+            }
+        }
+    });
+});
+
+router.route('/scheduletennis').post((req, res) => {
+    let sport_name = req.body.sport;
+    let discipline = req.body.discipline;
+    let type = req.body.type;
+    console.log('scheduling tennis');
+    competition.updateOne({sport: sport_name, discipline: discipline, type: type}, {$set: {'isScheduled': true}}, (e, response)=>{
+        if (e) {
+            console.log(e);
             res.status(200).json({'user':'no'});
         }
         else {
@@ -392,7 +429,16 @@ router.route('/savebracket').post((req, res) => {
             res.status(200).json({'user':'no'});
         }
         else {
-            res.status(200).json({'user':'ok'});
+            competition.update({sport: sport_name, discipline: discipline, type: type}, {$set: {'isScheduled': false}}, (e, r) => {
+                if (e) {
+                    console.log(e);
+                    res.status(200).json({'user':'no'});
+                }
+                else {
+                    res.status(200).json({'user':'ok'});
+                }
+            })
+            
         }
     });
 });

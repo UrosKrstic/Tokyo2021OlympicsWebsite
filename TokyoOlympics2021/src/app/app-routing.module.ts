@@ -13,6 +13,7 @@ import { MedalsComponent } from './medals/medals.component';
 import { RegisterAthletesComponent } from './register-athletes/register-athletes.component';
 import { RegisterComponent } from './register/register.component';
 import { ResultsCompetitionComponent } from './results-competition/results-competition.component';
+import { ScheduletennisComponent } from './scheduletennis/scheduletennis.component';
 import { UpdatecompComponent } from './updatecomp/updatecomp.component';
 
 const routes: Routes = [
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path: 'addsports', component: AddsportComponent, data: { plausableTypes: ['organizer']}, canActivate: [AuthenticationGuard]},
   {path: 'addcompetition', component: CompetitionComponent, data: { plausableTypes: ['organizer']}, canActivate: [AuthenticationGuard]},
   {path: 'updatecompetition', component: UpdatecompComponent, data: { plausableTypes: ['delegate']}, canActivate: [AuthenticationGuard]},
+  {path: 'updatecompetition/scheduletennis', component: ScheduletennisComponent, data: { plausableTypes: ['delegate']}, canActivate: [AuthenticationGuard]},
   {path: 'resultscompetition', component: ResultsCompetitionComponent, data: { plausableTypes: ['delegate']}, canActivate: [AuthenticationGuard]},
   {path: 'resultscompetition/addresults', component: AddresultsComponent, data: { plausableTypes: ['delegate']}, canActivate: [AuthenticationGuard]},
   {path: 'resultscompetition/addtennisresults', component: AddTennisResultsComponent, data: { plausableTypes: ['delegate']}, canActivate: [AuthenticationGuard]},

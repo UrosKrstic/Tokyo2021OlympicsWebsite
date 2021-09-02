@@ -41,6 +41,7 @@ import { UpdatecompComponent } from './updatecomp/updatecomp.component';
 import { ResultsCompetitionComponent } from './results-competition/results-competition.component';
 import { AddresultsComponent } from './addresults/addresults.component';
 import { AddTennisResultsComponent } from './add-tennis-results/add-tennis-results.component';
+import { ScheduletennisComponent } from './scheduletennis/scheduletennis.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { AddTennisResultsComponent } from './add-tennis-results/add-tennis-resul
     UpdatecompComponent,
     ResultsCompetitionComponent,
     AddresultsComponent,
-    AddTennisResultsComponent
+    AddTennisResultsComponent,
+    ScheduletennisComponent
   ],
   imports: [
     BrowserModule,

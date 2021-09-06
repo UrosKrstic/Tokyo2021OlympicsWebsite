@@ -14,7 +14,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost:27017/TokyoOlympics2021');
+mongoose.connect('mongodb://localhost:27017/TokyoOlympics2021_test');
 const conn = mongoose.connection;
 conn.once('open', () => {
     console.log('mongo open');
@@ -197,7 +197,7 @@ router.route('/addathlete').post((req, res) => {
                 new_athlete.save().then(() => {
                     console.log('country of new athlete: ' + coun);
                     country.updateOne({name: coun}, {$inc: {'numberOfAthletes': 1}}, (e, r) => {
-                        if (err) {
+                        if (e) {
                             res.status(400).json({'user':'no'});
                         }
                         else {

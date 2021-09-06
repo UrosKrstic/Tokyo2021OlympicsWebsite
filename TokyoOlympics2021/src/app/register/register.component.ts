@@ -1,3 +1,4 @@
+import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { countries } from '../model/countries';
@@ -39,22 +40,27 @@ export class RegisterComponent implements OnInit {
         let users = res as User[];
         if (users.find(user => user.username == this.username) == null) {
           if (this.password == this.confirmed_password) {
-            this.userService.register(
-              this.username,
-              this.password,
-              this.first_name,
-              this.last_name,
-              this.country,
-              this.type).subscribe(r => {
-                let response = r as RegistrationResponse;
-                if (response.user == 'ok') {
-                  console.log("successful registration");
-                  this.router.navigate(['/']);
-                }
-                else {
-                  this.errorMessage = "Error occured; unsuccessful registration";
-                }
-            });
+            if (this.isCorrectFormat(this.password)) {
+              this.userService.register(
+                this.username,
+                this.password,
+                this.first_name,
+                this.last_name,
+                this.country,
+                this.type).subscribe(r => {
+                  let response = r as RegistrationResponse;
+                  if (response.user == 'ok') {
+                    console.log("successful registration");
+                    this.router.navigate(['/']);
+                  }
+                  else {
+                    this.errorMessage = "Error occured; unsuccessful registration";
+                  }
+              });
+            }
+            else {
+              this.errorMessage = "password has incorrect format";
+            }
           }
           else {
             this.errorMessage = "password and password confirmation must match";
@@ -65,5 +71,13 @@ export class RegisterComponent implements OnInit {
         }
       }
     });
+  }
+
+  private isCorrectFormat(pass: string): boolean {
+    return pass.length >= 8 && pass.length <= 12
+    && /^[a-zA-Z]/.test(pass) && /\d.*\d/.test(pass)
+    && /[A-Z]/.test(pass) && /[[a-z].*[a-z].*[a-z]/.test(pass)
+    && /[\?\.\*\$\^\&\!\@\#,].*[\?\.\*\$\^\&\!\@\#,]/.test(pass)
+    && !(/[a-z][A-Z]{4}/.test(pass));
   }
 }

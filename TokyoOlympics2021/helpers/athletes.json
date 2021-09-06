@@ -1,58 +1,16 @@
 [
   {
-    "name": "Thomas Shelby",
+    "name": "Boki Bokic",
     "gender": "male",
-    "country": "England",
-    "sport": "Tennis",
-    "disciplines": ["singles"]
+    "country": "Andorra",
+    "sport": "Athletics",
+    "disciplines": ["Triple Jump"]
   },
   {
-    "name": "Bjorn Ragnarsson",
+    "name": "Misa Misic",
     "gender": "male",
-    "country": "Iceland",
-    "sport": "Tennis",
-    "disciplines": ["singles"]
-  },
-  {
-    "name": "Nemanja Bjelica",
-    "gender": "male",
-    "country": "Serbia",
-    "sport": "Tennis",
-    "disciplines": ["singles"]
-  },
-  {
-    "name": "Kobe Bryant",
-    "gender": "male",
-    "country": "USA",
-    "sport": "Tennis",
-    "disciplines": ["singles"]
-  },
-  {
-    "name": "Martin Jankowski",
-    "gender": "male",
-    "country": "Poland",
-    "sport": "Tennis",
-    "disciplines": ["singles"]
-  },
-  {
-    "name": "Kyle Lowry",
-    "gender": "male",
-    "country": "Canada",
-    "sport": "Tennis",
-    "disciplines": ["singles"]
-  },
-  {
-    "name": "Aca Lukas",
-    "gender": "male",
-    "country": "Montenegro",
-    "sport": "Tennis",
-    "disciplines": ["singles"]
-  },
-  {
-    "name": "Steve Nash",
-    "gender": "male",
-    "country": "South Africa",
-    "sport": "Tennis",
-    "disciplines": ["singles"]
+    "country": "Aruba",
+    "sport": "Athletics",
+    "disciplines": ["Discus Throw"]
   }
 ]

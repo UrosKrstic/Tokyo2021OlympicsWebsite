@@ -14,7 +14,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost:27017/TokyoOlympics2021_test');
+mongoose.connect('mongodb://localhost:27017/TokyoOlympics2021');
 const conn = mongoose.connection;
 conn.once('open', () => {
     console.log('mongo open');
